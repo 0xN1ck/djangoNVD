@@ -1,0 +1,41 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <div class="">
+        <div class="container">
+            <div class="nav nav-justified navbar-nav">
+
+                <form class="navbar-form navbar-search" role="search" action="{% url 'sql' %}" method="get">
+                    <div class="input-group">
+
+                        <input type="text" rows="3" class="form-control mr-sm-2" placeholder="SQL-запрос обязательно должен начинаться с SELECT " name="q">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-search btn-primary">
+                                Выполнить
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <br>
+        <h5 class="container">{{ res }} {{ q }}</h5>
+        <br>
+        {% load staticfiles %}
+        <img src="{% static 'images/sql.jpg'%}" alt="..." class="mx-auto d-block" >
+{#        <div class="jumbotron bg-transparent">#}
+{#            <div class="container">#}
+{#                <h1 class="display-3">Hello, world!</h1>#}
+{#                <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>#}
+{#                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>#}
+{#            </div>#}
+{#        </div>#}
+        {#    </div>#}
+        {#    <div class="container">#}
+        {#        <div class="row justify-content-md-center">#}
+        {#            <h1 class=""> HOME </h1>#}
+        {#        </div>#}
+        {#    </div>#}
+{% endblock %}

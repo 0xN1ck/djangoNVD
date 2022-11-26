@@ -1,0 +1,94 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    {% if cwe == "CWE в базе отсутствует" %}
+        <div class="row justify-content-md-center">
+            <h1>{{ request.path|slice:"5:" }} в базе отсутствует</h1>
+        </div>
+    {% else %}
+        <br>
+        <div class="container ">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-light mb-3" style="max-width: 30rem;">
+                        <div class="card-header"><strong>CWE name:</strong></div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ cwe_name }}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-light mb-3" style="max-width: 30rem;">
+                        <div class="card-header"><strong>CVE's</strong></div>
+                        <div class="card-body">
+                            <a  href="/cves_{{ name }}"> <h4 class="card-title">Views CVE's</h4></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="card border-light mb-3" style="max-width: 100rem;">
+                        <div class="card-header"><strong>Description:</strong></div>
+                        <div class="card-body">
+                            <p class="card-text">{{ description | linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card border-light mb-3" style="max-width: 100rem;">
+                        <div class="card-header"><strong>Hyperlink:</strong></div>
+                        <div class="card-body">
+                            <h4 class="card-title"></h4>
+                            {% if hyperlink == "NONE" %}
+                                <h5> {{ hyperlink | linebreaks }}</h5>
+                            {% else %}
+                                <a  href="{{ hyperlink }}"> {{ hyperlink | linebreaks }}</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        {#                        <div class="col-md-12">#}
+                        {#                            <div class="card border-light mb-3" style="max-width: 100rem;">#}
+                        {#                              <div class="card-header"><strong>Hyperlink:</strong></div>#}
+                        {#                              <div class="card-body">#}
+                        {#                                <h4 class="card-title"></h4>#}
+                        {##}
+                        {#                                    <a  href="{{ hyperlink }}"> {{ hyperlink | linebreaks }}</a>#}
+                        {##}
+                        {#                              </div>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        <div class="col-md-12">
+                            <div class="card border-light " style="max-width: 100rem;">
+                                <div class="card-header"><strong>CAPEC name:</strong></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {% for capec in capec_names %}
+                                            {% if capec == "NONE" %}
+                                                <h5>{{ capec }}</h5>
+                                            {% else %}
+                                                <a href="{{ request.path }}/{{ capec }}">{{ capec }}</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </h5>
+                                    {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

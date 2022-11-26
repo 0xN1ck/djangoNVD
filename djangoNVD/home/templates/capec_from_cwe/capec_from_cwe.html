@@ -1,0 +1,124 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    <br>
+    <div class="container ">
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card border-light mb-3" style="max-width: 30rem;">
+                    <div class="card-header"><strong>CAPEC name:</strong></div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ capec_name }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-light " style="max-width: 100rem;">
+                    <div class="card-header"><strong>ID ATT&CK:</strong></div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% for i in id_att_ck %}
+                                {% if i != 'NONE' %}
+                                    <a  href="{{ request.path }}/{{ i }}">{{ i|linebreaks }}</a>
+                                {% else %}
+                                    {{ i|linebreaks }}
+                                {% endif %}
+                            {% endfor %}
+                        </h5>
+                        {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-light " style="max-width: 100rem;">
+                    <div class="card-header"><strong>ATT&CK name:</strong></div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% if att_ck_name == 'NONE' %}
+                                <a> {{ att_ck_name | linebreaks }}</a>
+                            {% else %}
+                                {% for i in att_ck_name %}
+                                    {{ i | linebreaks }}
+                                {% endfor %}
+                            {% endif %}
+                        </h5>
+                        {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card border-light mb-3" style="max-width: 100rem;">
+                    <div class="card-header"><strong>Description:</strong></div>
+                    <div class="card-body">
+                        <p class="card-text">{{ des | linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card border-light mb-3" style="max-width: 100rem;">
+                            <div class="card-header"><strong>Hyperlink:</strong></div>
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                {% if i != 'NONE' %}
+                                    <a  href="{{ link }}"> {{ link | linebreaks }}</a>
+                                {% else %}
+                                    {{ link|linebreaks }}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card border-light mb-3" style="max-width: 100rem;">
+                            <div class="card-header"><strong>Hyperlink ATT&CK:</strong></div>
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                {% if link_att_ck == "NONE" %}
+                                    <h5> {{ link_att_ck | linebreaks }}</h5>
+                                {% else %}
+                                    {% for i in link_att_ck %}
+                                        {% if i != 'NONE' %}
+                                            <a  href="{{ i }}"> {{ i | linebreaks }}</a>
+                                        {% else %}
+                                            <h5>{{ i|linebreaks }}</h5>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card border-light mb-3" style="max-width: 100rem;">
+                            <div class="card-header"><strong>Views CWE's</strong></div>
+                            <div class="card-body">
+                                <h4 class="card-title"><a  href="/cwes_{{ capec_name }}"> Views CWE's</a></h4>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}

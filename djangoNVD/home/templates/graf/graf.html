@@ -1,0 +1,145 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script> -->
+    <script src="{% static 'js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/Chart.js' %}"></script>
+    <div class="row justify-content-center">
+        <form  action="{% url 'refresh' %}" method="get">
+            <button type="submit" class="btn btn-primary" name="refresh" value="Click">
+                Обновить данные
+            </button>
+        </form>
+
+    </div>
+    <div class="row justify-content-center">
+        {% if date_time %}
+            <h5>Данные обновлены. Они актуальны по {{ date_time }}</h5>
+        {% else %}
+            <h5>Данные актуальны по 16.03.2020</h5>
+        {% endif %}
+    </div>
+    {{ xui }}
+    <div class="row">
+
+        <div class="col-lg-6 col-sm-12">
+            {#            <h2><p class="text-center">Самые распрастранненые CVE</p> </h2>#}
+            <div>
+                <canvas id="bar-chart-cve" width="1600" height="900"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-12">
+            {#            <h2><p class="text-center">Самые распрастранненые CWE</p></h2>#}
+            <div>
+                <canvas id="pie-chart" width="1600" height="900"></canvas>
+            </div>
+        </div>
+    </div>
+    {#    <br><br>#}
+    {#    <div class="row justify-content-center">#}
+    <div class="row justify-content-center">
+        {#            <h2><p class="text-center">Распределение баллов CVSS V2</p></h2>#}
+        <div class="col-lg-6 col-sm-12">
+            <canvas id="doughnut" width="1600" height="900"></canvas>
+        </div>
+    </div>
+    {#    </div>#}
+
+    <script>
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {
+                labels: [{% for name in name_list %}
+                    "{{ name }}",
+                {% endfor %}],
+                datasets: [{
+                    label: "Количество CWE",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#b65586", "#ffff00", "#525c9c","#5aad65", "#ad8447"],
+                    data: [{% for i in kol_vo %}
+                        {{ i }},
+                    {% endfor %}]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Самые распрастранненые CWE',
+                    fontSize: 24,
+                    fontColor: '#2FA4E7'
+                }
+            }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("bar-chart-cve"), {
+            type: 'bar',
+            data: {
+                {#labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],#}
+                labels: [
+                    {% for name in name_list_cve %}
+                        "{{ name }}",
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        label: "Количество CVE",
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#b65586", "#ffff00", "#525c9c","#5aad65", "#ad8447"],
+                        {#data: [2478,5267,734,784,433]#}
+                        data: [
+                            {% for i in kol_vo_cve %}
+                                {{ i }},
+                            {% endfor %}
+                        ]
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Самые распрастранненые CVE',
+                    fontSize: 24,
+                    fontColor: '#2FA4E7'
+                }
+            }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("doughnut"), {
+            type: 'doughnut',
+            data: {
+                labels: ["Low", "Medium", "High"],
+                datasets: [
+                    {
+                        label: "Количество CVE",
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+                        {#data: [2478,5267,734,784,433]#}
+                        data: [
+                            {% for i in base_score_list %}
+                                {{ i }},
+                            {% endfor %}
+                        ]
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Распределение баллов CVSS V2',
+                    fontSize: 24,
+                    fontColor: '#2FA4E7'
+                }
+            }
+        });
+    </script>
+
+
+
+
+    {#    <div id="chartContainer" style="height: 370px; width: 50%;" >#}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="nav nav-justified navbar-nav">
+
+            <form class="navbar-form navbar-search" role="search" action="{% url 'search_cpe' %}" method="get">
+                <div class="input-group">
+
+                    <input type="text" class="form-control mr-sm-2" placeholder="Search" name="q">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-search btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <br>
+
+    <div class="container">
+        <table class="table table-hover table-striped form-group">
+            <thead>
+            <tr>
+                {#<th scope="col" style ="width: 5%">№</th>#}
+                <th scope="row" >№</th>
+                <th scope="col" >Имя CPE</th>
+                <th scope="col" >Посмотреть CVEs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for id in cpe_s %}
+                <tr>
+                    <th scope="row">{{ id.0 }}</th>
+                    <td>{{ id.1 }}</td>
+                    <td><a href="/search_cpe/views_cves/{{ id.1 }}" >Views CVE</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <ul class="pagination">
+                {#            <span class="step-links">#}
+
+                {% if cpe_s.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&{{ last_questions }}">&lt;&lt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ cpe_s.previous_page_number }}&{{ last_questions }}"> &lt; </a>
+                    </li>
+                {% endif %}
+
+
+
+                <li class="page-item">
+                    {#                    <span class="current">#}
+                    <a class="page-link disabled" >{{ cpe_s.number }} of {{ cpe_s.paginator.num_pages }} </a>
+                    {#                    </span>#}
+                </li>
+
+
+                {% if cpe_s.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ cpe_s.next_page_number }}&{{ last_questions }}">&gt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ cpe_s.paginator.num_pages }}&{{ last_questions }}">&gt;&gt;</a>
+                    </li>
+                {% endif %}
+
+                </span>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}

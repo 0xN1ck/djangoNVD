@@ -1,0 +1,70 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+    <br>
+    <div class="container ">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-light mb-3" style="max-width: 30rem;">
+                            <div class="card-header"><strong>ATT&CK name:</strong></div>
+                            <div class="card-body">
+                                <h4 class="card-title">{{ name_att_ck }}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-light " style="max-width: 100rem;">
+                            <div class="card-header"><strong>ID ATT&CK:</strong></div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ id_att_ck }}
+                                </h5>
+                                {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="card border-light " style="max-width: 100rem;">
+                            <div class="card-header"><strong>Description:</strong></div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Description:
+                                </h5>
+                                <p class="card-text">{{ description_att_ck | linebreaks }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-light " style="max-width: 100rem;">
+                    <div class="card-header"><strong>Details: </strong></div>
+                    <div class="card-body">
+                        <div class="card-data"><span class="h5 card-title">ID: </span>{{ id_att_ck }}</div>
+                        <div class="card-data"><span class="h5 card-title">Tactic:</span> {{ tactic }}</div>
+                        <div class="card-data"><span class="h5 card-title">Platform:</span>{{ platform }}</div>
+                        <div class="card-data"><span class="h5 card-title">Permissions Required: </span>{{ permissions_required }}</div>
+                        <div class="card-data"><span class="h5 card-title">Effective Permissions </span>{{ effective_permissions }}</div>
+                        <div class="card-data"><span class="h5 card-title">Data Sources: </span>{{ data_sources }}</div>
+                        <div class="card-data"><span class="h5 card-title">Data Sources: </span>{{ defense_bypassed }}</div>
+                        <div class="card-data"><span class="h5 card-title">CAPEC ID:</span>
+                            {% for capec in capec_id %}
+                                <a href="/capec/{{ capec }}"> {{ capec }} </a>
+                            {% endfor %}
+                        </div>
+                        <div class="card-data"><span class="h5 card-title">Version: </span>{{ version }}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}

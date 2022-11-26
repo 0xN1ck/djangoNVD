@@ -1,0 +1,134 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    {% if res == 'CVE в базе отсутствует' %}
+        <div class="row justify-content-md-center">
+        <h1>{{ request.path|slice:"5:" }} в базе отсутствует</h1>
+        </div>
+    {% else %}
+        <br>
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-light mb-3" style="max-width: 30rem;">
+                        <div class="card-header"><strong>CVE name:</strong></div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ data_cve.0.1 }}</h4>
+                            {#                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-light " style="max-width: 30rem;">
+                        <div class="card-header"><strong>Date:</strong></div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ date }}</h4>
+                            {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-light " style="max-width: 30rem;">
+                        <div class="card-header"><strong>CPE's:</strong></div>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a  href="/cpes_{{ data_cve.0.1 }}">Views cpe's</a>
+                            </h4>
+                            {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card border-light mb-3" style="max-width: 100rem;">
+                        <div class="card-header"><strong>Description:</strong></div>
+                        <div class="card-body">
+                            <h5 class="card-title">Base Score: {{ description_title }}</h5>
+                            <p class="card-text">{{ description_tail | linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+                {#            <div class="col-md-4">#}
+                {#                <div class="card border-light mb-3" style="max-width: 30rem;">#}
+                {#                  <div class="card-header"><strong>Vector:</strong></div>#}
+                {#                  <div class="card-body">#}
+                {#                    <h5 class="card-title">{{ vector }}</h5>#}
+                {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                {#                  </div>#}
+                {#                </div>#}
+                {#            </div>#}
+
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-light mb-3" style="max-width: 30rem;">
+                                <div class="card-header"><strong>Vector:</strong></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ vector }}</h5>
+{#                                    <p class="card-text">{{ data_cve.0.5 | linebreaks }}</p>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card border-light mb-3" style="max-width: 30rem;">
+                                <div class="card-header"><strong>BDU name:</strong></div>
+                                <div class="card-body">
+                                    
+                                    {% for i in bdu_names %}
+                                        {% if i == 'NONE' %}
+                                        <h5 class="card-title">{{ i }}</h5>
+                                        {% else %}
+                                        <h5 class="card-title"><a href="/bdu_fstec/{{ i }}">{{ i }}</a></h5>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-light mb-3" style="max-width: 100rem;">
+                                <div class="card-header"><strong>Hyperlink:</strong></div>
+                                <div class="card-body">
+                                    <h4 class="card-title"></h4>
+                                    {% for links in hyperlinks %}
+                                        <a  href="{{ links }}"> {{ links | linebreaks }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card border-light " style="max-width: 100rem;">
+                                <div class="card-header"><strong>CWE name:</strong></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {% if cwe == "NONE" %}
+                                            {{ data_cve.0.6 }}
+                                        {% else %}
+                                            <a href="{{ request.path }}/{{ cwe }}">{{ data_cve.0.6 }}</a>
+                                        {% endif %}
+                                    </h5>
+                                    {#                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

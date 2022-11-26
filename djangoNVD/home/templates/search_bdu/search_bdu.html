@@ -1,0 +1,102 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="nav nav-justified navbar-nav">
+
+            <form class="navbar-form navbar-search" role="search" action="{% url 'search_bdu' %}" method="get">
+                <div class="input-group">
+
+                    <input type="text" class="form-control mr-sm-2" placeholder="Search" name="q">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-search btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <br>
+
+    <div class="container">
+        <h2>Всего BDU: {{ vsego }}</h2>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <table class="table table-hover table-striped form-group ">
+                <thead>
+                <tr>
+                    {#<th scope="col" style ="width: 5%">№</th>#}
+                    <th scope="row" >№</th>
+                    <th scope="col" width="17%">Имя BDU</th>
+                    <th scope="col" >Описание BDU</th>
+                    <th scope="col" width="14%">CVSSv2</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in bdu_s %}
+                    <tr>
+                        <th scope="row">{{ i.3 }}</th>
+                        <td><a href="/bdu_fstec/{{ i.0 }}" ><p class="font-weight-bold">{{ i.0 }}</p></a></td>
+                        <td>{{ i.1 }}</td>
+                        <td>
+                            {#                        {{ i.4|truncatewords:"1" == "Средний: "}}#}
+                            {% if i.4|slice:":7" == "Средний" %}
+                                <p class="bg-warning text-white">{{  i.4 }}</p>
+                            {% elif i.4|slice:":7" == 'Высокий' %}
+                                <p class="bg-danger text-white">{{  i.4 }}</p>
+                            {% elif i.4|slice:":11" == 'Критический' %}
+                                <p class="bg-dark text-white"> {{  i.4 }}</p>
+                            {% elif i.4|slice:":6" == 'Низкий' %}
+                                <p class="bg-info text-white">{{  i.4 }}</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <ul class="pagination">
+                {#            <span class="step-links">#}
+
+                {% if bdu_s.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&lt;&lt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ bdu_s.previous_page_number }}"> &lt; </a>
+                    </li>
+                {% endif %}
+
+
+
+                <li class="page-item">
+                    {#                    <span class="current">#}
+                    <a class="page-link disabled" >{{ bdu_s.number }} of {{ bdu_s.paginator.num_pages }} </a>
+                    {#                    </span>#}
+                </li>
+
+
+                {% if bdu_s.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ bdu_s.next_page_number }}">&gt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ bdu_s.paginator.num_pages }}">&gt;&gt;</a>
+                    </li>
+                {% endif %}
+
+                </span>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

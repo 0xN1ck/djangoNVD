@@ -1,0 +1,90 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="nav nav-justified navbar-nav">
+
+            <form class="navbar-form navbar-search" role="search" action="{% url 'search_att_ck_all' %}" method="get">
+                <div class="input-group">
+
+                    <input type="text" class="form-control mr-sm-2" placeholder="Search" name="q">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-search btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Всего ATT&CK: {{ vsego }}</h2>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover table-striped form-group">
+            <thead>
+            <tr>
+                {#<th scope="col" style ="width: 5%">№</th>#}
+                <th scope="row" >№</th>
+                <th scope="col" width="25%">Имя ATT&CK</th>
+                <th scope="col" >Описание ATT&CK</th>
+                <th scope="col" >ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for id in att_ck %}
+                <tr>
+                    <th scope="row">{{ id.0 }}</th>
+                    <td><p class="font-weight-bold"><a href="{{ id.3 }}" >{{ id.1 }}</a></p></td>
+                    <td>{{ id.2|truncatewords:"60" }}</td>
+                    <td>
+                        <p class="font-weight-bold">{{ id.3 }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <ul class="pagination">
+                {#            <span class="step-links">#}
+
+                {% if att_ck.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&lt;&lt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ att_ck.previous_page_number }}"> &lt; </a>
+                    </li>
+                {% endif %}
+
+
+
+                <li class="page-item">
+                    {#                    <span class="current">#}
+                    <a class="page-link disabled" >{{ att_ck.number }} of {{ att_ck.paginator.num_pages }} </a>
+                    {#                    </span>#}
+                </li>
+
+
+                {% if att_ck.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ att_ck.next_page_number }}">&gt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ att_ck.paginator.num_pages }}">&gt;&gt;</a>
+                    </li>
+                {% endif %}
+
+                </span>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
